@@ -5,12 +5,11 @@ import Input from './Input';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
-function CreatePostForm({ setToggleCreatePost }) {
+function CreatePostForm({ setToggleCreatePost, titleForm, postId }) {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [image, setImage] = useState();
     const [accessToken, setAccessToken] = useState('');
-
     const [loading, setLoading] = useState(false);
     let timeOutId;
 
@@ -34,22 +33,72 @@ function CreatePostForm({ setToggleCreatePost }) {
             })
             .then(function (response) {
                 setLoading(true);
-                if (!image) return;
-                const fomrData = new FormData();
-                for (let i = 0; i < image.length; i++) {
-                    fomrData.append('myFile', image[i]);
+                if (image) {
+                    const fomrData = new FormData();
+                    for (let i = 0; i < image.length; i++) {
+                        fomrData.append('myFile', image[i]);
+                    }
+                    fomrData.append('postId', response.data.data._id);
+                    axios
+                        .post('http://localhost:8080/api/v1/post/upload', fomrData, {
+                            headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'multipart/form-data' },
+                        })
+                        .then(function (response) {
+                            console.log(response.data);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                } else {
+                    console.log('No image');
                 }
-                fomrData.append('postId', response.data.data._id);
-                axios
-                    .post('http://localhost:8080/api/v1/post/upload', fomrData, {
-                        headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'multipart/form-data' },
-                    })
-                    .then(function (response) {
-                        console.log(response.data);
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
+                timeOutId = setTimeout(() => {
+                    setLoading(false);
+                    alert(response.data.message);
+                    setTitle('');
+                    setContent('');
+                    setToggleCreatePost(false);
+                    window.location.reload(true);
+                }, 3000);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    };
+
+    const handleUpdatePost = (e) => {
+        e.preventDefault();
+
+        if (!accessToken) return;
+        const data = {
+            title: title,
+            content: content,
+        };
+        axios
+            .put(`http://localhost:8080/api/v1/post/update/${postId}`, data, {
+                headers: { Authorization: `Bearer ${accessToken}` },
+            })
+            .then(function (response) {
+                setLoading(true);
+                if (image) {
+                    const fomrData = new FormData();
+                    for (let i = 0; i < image.length; i++) {
+                        fomrData.append('myFile', image[i]);
+                    }
+                    fomrData.append('postId', postId);
+                    axios
+                        .post('http://localhost:8080/api/v1/post/upload', fomrData, {
+                            headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'multipart/form-data' },
+                        })
+                        .then(function (response) {
+                            console.log(response.data);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                } else {
+                    console.log('No image');
+                }
                 timeOutId = setTimeout(() => {
                     setLoading(false);
                     alert(response.data.message);
@@ -68,6 +117,18 @@ function CreatePostForm({ setToggleCreatePost }) {
         return () => clearTimeout(timeOutId);
     }, [timeOutId]);
 
+    useEffect(() => {
+        axios
+            .get(`http://localhost:8080/api/v1/post/${postId}`)
+            .then(function (response) {
+                setTitle(response.data.data.title);
+                setContent(response.data.data.content);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }, [postId]);
+
     return (
         <div
             className="flex items-center justify-center fixed top-0 right-0 left-0 bottom-0 z-10"
@@ -77,10 +138,19 @@ function CreatePostForm({ setToggleCreatePost }) {
                 className="relative bg-[#e2e3e5] w-[500px] h-fit p-10 rounded animate-fadeIn"
                 onClick={(e) => e.stopPropagation()}
             >
-                <div className="font-bold text-[32px] mb-8">Create new post</div>
+                <div className="font-bold text-[32px] mb-8">{titleForm}</div>
                 <form>
                     <Input label="Title:" type="text" placeholder="Title here" value={title} setValue={setTitle} />
-                    <input type="file" name="myFile" multiple onChange={(e) => setImage(e.target.files)} />
+                    <div className="flex justify-between items-center">
+                        <label className="text-[17px]">Image:</label>
+                        <input
+                            className="w-[259px]"
+                            type="file"
+                            name="myFile"
+                            multiple
+                            onChange={(e) => setImage(e.target.files)}
+                        />
+                    </div>
                     <textarea
                         className="w-full outline-none px-[18px] py-[8px] bg-[#e5eaf0] border border-[#c3c6c9] mt-3"
                         name="content"
@@ -92,7 +162,7 @@ function CreatePostForm({ setToggleCreatePost }) {
                     ></textarea>
                     <button
                         className="w-full bg-[#5c7099] px-[12px] py-[8px] text-white rounded mt-5"
-                        onClick={handleCreatePost}
+                        onClick={!postId ? handleCreatePost : handleUpdatePost}
                     >
                         Save
                     </button>

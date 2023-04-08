@@ -144,7 +144,9 @@ function Profile() {
                 </div>
             </div>
             {toggleEditProfile && <ProfileForm setToggleEditProfile={setToggleEditProfile} />}
-            {toggleCreatePost && <CreatePostForm setToggleCreatePost={setToggleCreatePost} />}
+            {toggleCreatePost && (
+                <CreatePostForm setToggleCreatePost={setToggleCreatePost} titleForm="Create new post" />
+            )}
         </>
     );
 }

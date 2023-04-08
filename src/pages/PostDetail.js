@@ -1,18 +1,36 @@
 import { useState, useEffect } from 'react';
 import { faClock, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import CommentListItem from '../components/CommentListItem';
 import { formatDate } from '../utils/formatDate';
+import CreatePostForm from '../components/Form/CreatePostForm';
 
 function PostDetail() {
     const [postInfo, setPostInfo] = useState({});
     const [userInfo, setUserInfo] = useState({});
     const [currentUser, setCurrentUser] = useState({});
     const [accessToken, setAccessToken] = useState('');
+    const [toggleEditPost, setToggleEditPost] = useState(false);
 
     const { id } = useParams();
+    const navigate = useNavigate();
+
+    const handleDeletePost = () => {
+        if (window.confirm('Are you sure want to delete this post?') === false) return;
+        axios
+            .delete(`http://localhost:8080/api/v1/post/delete/${id}`, {
+                headers: { Authorization: `Bearer ${accessToken}` },
+            })
+            .then(function (response) {
+                alert(response.data.message);
+                navigate('/profile');
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    };
 
     useEffect(() => {
         axios
@@ -105,18 +123,24 @@ function PostDetail() {
                             return <img key={index} className="mt-3 w-full" src={item} alt="" />;
                         })}
                         <p className="mt-2">{postInfo.content}</p>
-                        <button
-                            // onClick={() => setToggleEditPost(true)}
-                            className="bg-[#5c7099] text-[#ffffff] rounded px-3 py-2 mt-3"
-                        >
-                            Edit
-                        </button>
-                        <button
-                            // onClick={() => setToggleEditPost(true)}
-                            className="ml-3 bg-[red] text-[#ffffff] rounded px-3 py-2 mt-3"
-                        >
-                            Delete
-                        </button>
+                        {postInfo.userId === currentUser._id ? (
+                            <>
+                                <button
+                                    onClick={() => setToggleEditPost(true)}
+                                    className="bg-[#5c7099] text-[#ffffff] rounded px-3 py-2 mt-3"
+                                >
+                                    Edit
+                                </button>
+                                <button
+                                    onClick={handleDeletePost}
+                                    className="ml-3 bg-[red] text-[#ffffff] rounded px-3 py-2 mt-3"
+                                >
+                                    Delete
+                                </button>
+                            </>
+                        ) : (
+                            <></>
+                        )}
                     </div>
                 </div>
                 <div className="w-full h-fit mt-5">
@@ -150,6 +174,9 @@ function PostDetail() {
                     </ul>
                 </div>
             </div>
+            {toggleEditPost && (
+                <CreatePostForm setToggleCreatePost={setToggleEditPost} titleForm="Edit post" postId={postInfo._id} />
+            )}
         </>
     );
 }

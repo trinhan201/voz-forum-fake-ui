@@ -4,12 +4,14 @@ import axios from 'axios';
 import { forumLogo } from '../../assets/img';
 import LoginForm from '../../components/Form/LoginForm';
 import RegisterForm from '../../components/Form/RegisterForm';
+import ChangePasswordForm from '../../components/Form/ChangePasswordForm';
 
 function Header() {
     const [scrolled, setScrolled] = useState(false);
     const [toggleLogin, setToggleLogin] = useState(false);
     const [toggleRegister, setToggleRegister] = useState(false);
     const [toggleMenu, setToggleMenu] = useState(false);
+    const [toggleChangePassword, setToggleChangePassword] = useState(false);
     const [accessToken, setAccessToken] = useState('');
     const [userInfo, setUserInfo] = useState({});
 
@@ -144,7 +146,15 @@ function Header() {
                                     >
                                         Profile
                                     </NavLink>
-                                    <div className="p-3 hover:bg-[#cccccc] cursor-pointer">Change password</div>
+                                    <div
+                                        className="p-3 hover:bg-[#cccccc] cursor-pointer"
+                                        onClick={() => {
+                                            setToggleChangePassword(!toggleChangePassword);
+                                            setToggleMenu(false);
+                                        }}
+                                    >
+                                        Change password
+                                    </div>
                                     <div className="p-3 hover:bg-[#cccccc] cursor-pointer" onClick={handleLogout}>
                                         Logout
                                     </div>
@@ -156,6 +166,7 @@ function Header() {
             </div>
             {toggleLogin && <LoginForm setToggleLogin={setToggleLogin} />}
             {toggleRegister && <RegisterForm setToggleRegister={setToggleRegister} />}
+            {toggleChangePassword && <ChangePasswordForm setToggleChangePassword={setToggleChangePassword} />}
         </>
     );
 }
