@@ -6,6 +6,7 @@ import { formatDate } from '../utils/formatDate';
 
 function MemberDetail() {
     const [userInfo, setUserInfo] = useState({});
+    const [posts, setPosts] = useState([]);
     const { id } = useParams();
 
     useEffect(() => {
@@ -18,6 +19,17 @@ function MemberDetail() {
                 console.log(error);
             });
     }, [id]);
+
+    useEffect(() => {
+        axios
+            .get(`http://localhost:8080/api/v1/post/all`)
+            .then(function (response) {
+                setPosts(response.data.data);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }, []);
 
     return (
         <>
@@ -49,30 +61,21 @@ function MemberDetail() {
                         All posts list
                     </h3>
                     <ul className="bg-[#ebeced]">
-                        <PostListItem
-                            img="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/1200px-Cat03.jpg"
-                            title="Pubg mobilePubg ubg mobePubg mobilePubg mobile"
-                            postDate="2/3/2023"
-                            username="truonghan123"
-                            dateTitle="Created at:"
-                            className="w-[800px] truncate font-medium text-[#5c7099] cursor-pointer"
-                        />
-                        <PostListItem
-                            img="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/1200px-Cat03.jpg"
-                            title="Pubg mobilePubg ubg mobePubg mobilePubg mobile"
-                            postDate="2/3/2023"
-                            username="truonghan123"
-                            dateTitle="Created at:"
-                            className="w-[800px] truncate font-medium text-[#5c7099] cursor-pointer"
-                        />
-                        <PostListItem
-                            img="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/1200px-Cat03.jpg"
-                            title="Pubg mobilePubg ubg mobePubg mobilePubg mobile"
-                            postDate="2/3/2023"
-                            username="truonghan123"
-                            dateTitle="Created at:"
-                            className="w-[800px] truncate font-medium text-[#5c7099] cursor-pointer"
-                        />
+                        {posts
+                            .filter((post) => post.userId === userInfo._id)
+                            .map((post, index) => {
+                                return (
+                                    <PostListItem
+                                        key={index}
+                                        img={userInfo.avatar}
+                                        title={post.title}
+                                        postDate={formatDate(post.createdAt)}
+                                        username={userInfo.userName}
+                                        dateTitle="Created at:"
+                                        className="w-[800px] truncate font-medium text-[#5c7099] cursor-pointer"
+                                    />
+                                );
+                            })}
                     </ul>
                 </div>
             </div>

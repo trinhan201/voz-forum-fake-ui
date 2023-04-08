@@ -71,15 +71,17 @@ function Members() {
                                 .map((member, index) => {
                                     return (
                                         <li key={index} className="p-[10px]">
-                                            <div className="flex items-center">
-                                                <div className="w-[50px] h-[50px]">
-                                                    <img
-                                                        className="w-full h-full object-cover rounded-full"
-                                                        src={member.avatar}
-                                                        alt=""
-                                                    />
+                                            <NavLink to={`/members/${member._id}`}>
+                                                <div className="flex items-center">
+                                                    <div className="w-[50px] h-[50px]">
+                                                        <img
+                                                            className="w-full h-full object-cover rounded-full"
+                                                            src={member.avatar}
+                                                            alt=""
+                                                        />
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </NavLink>
                                         </li>
                                     );
                                 })}

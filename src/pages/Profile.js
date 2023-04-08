@@ -5,11 +5,14 @@ import FormData from 'form-data';
 import PostListItem from '../components/PostListItem';
 import { formatDate } from '../utils/formatDate';
 import ProfileForm from '../components/Form/ProfileForm';
+import CreatePostForm from '../components/Form/CreatePostForm';
 
 function Profile() {
     const [accessToken, setAccessToken] = useState('');
     const [userInfo, setUserInfo] = useState({});
     const [toggleEditProfile, setToggleEditProfile] = useState(false);
+    const [toggleCreatePost, setToggleCreatePost] = useState(false);
+    const [posts, setPosts] = useState([]);
 
     const uploadFile = (e) => {
         const data = new FormData();
@@ -50,6 +53,17 @@ function Profile() {
                 console.log(error);
             });
     }, [accessToken]);
+
+    useEffect(() => {
+        axios
+            .get('http://localhost:8080/api/v1/post/all')
+            .then(function (response) {
+                setPosts(response.data.data);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }, []);
 
     return (
         <>
@@ -100,41 +114,37 @@ function Profile() {
                     </div>
                 </div>
                 <div className="flex-[3] flex flex-col h-fit">
-                    <button className="self-end bg-[#5c7099] text-[#ffffff] rounded px-3 py-2 mb-4">
+                    <button
+                        className="self-end bg-[#5c7099] text-[#ffffff] rounded px-3 py-2 mb-4"
+                        onClick={() => setToggleCreatePost(true)}
+                    >
                         Create new post
                     </button>
                     <h3 className="text-[#ebeced] text-[21px] font-medium bg-[#5c7099] px-[10px] py-[6px]">
                         All posts list
                     </h3>
                     <ul className="bg-[#ebeced]">
-                        <PostListItem
-                            img="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/1200px-Cat03.jpg"
-                            title="Pubg mobilePubg ubg mobePubg mobilePubg mobile"
-                            postDate="2/3/2023"
-                            username="truonghan123"
-                            dateTitle="Created at:"
-                            className="w-[800px] truncate font-medium text-[#5c7099] cursor-pointer"
-                        />
-                        <PostListItem
-                            img="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/1200px-Cat03.jpg"
-                            title="Pubg mobilePubg ubg mobePubg mobilePubg mobile"
-                            postDate="2/3/2023"
-                            username="truonghan123"
-                            dateTitle="Created at:"
-                            className="w-[800px] truncate font-medium text-[#5c7099] cursor-pointer"
-                        />
-                        <PostListItem
-                            img="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/1200px-Cat03.jpg"
-                            title="Pubg mobilePubg ubg mobePubg mobilePubg mobile"
-                            postDate="2/3/2023"
-                            username="truonghan123"
-                            dateTitle="Created at:"
-                            className="w-[800px] truncate font-medium text-[#5c7099] cursor-pointer"
-                        />
+                        {posts
+                            .filter((post) => post.userId === userInfo._id)
+                            .map((post, index) => {
+                                return (
+                                    <PostListItem
+                                        key={index}
+                                        id={post._id}
+                                        img={userInfo.avatar}
+                                        title={post.title}
+                                        postDate={formatDate(post.createdAt)}
+                                        username={userInfo.userName}
+                                        dateTitle="Created at:"
+                                        className="w-[800px] truncate font-medium text-[#5c7099] cursor-pointer"
+                                    />
+                                );
+                            })}
                     </ul>
                 </div>
             </div>
             {toggleEditProfile && <ProfileForm setToggleEditProfile={setToggleEditProfile} />}
+            {toggleCreatePost && <CreatePostForm setToggleCreatePost={setToggleCreatePost} />}
         </>
     );
 }

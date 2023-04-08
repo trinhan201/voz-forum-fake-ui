@@ -4,13 +4,13 @@ function PostListItem(props) {
     return (
         <li className="p-[10px] border-b-[1px] border-[#cccccc]">
             <div className="flex items-center">
-                <NavLink to="/123">
+                <NavLink to={`/${props.id}`}>
                     <div className="w-[40px] h-[40px]">
                         <img className="w-full h-full object-cover rounded-full" src={props.img} alt="" />
                     </div>
                 </NavLink>
                 <div className="ml-3">
-                    <NavLink to="/1">
+                    <NavLink to={`/${props.id}`}>
                         <h3 className={props.className}>{props.title}</h3>
                     </NavLink>
                     <p className="text-[14px] text-[#9a919b]">

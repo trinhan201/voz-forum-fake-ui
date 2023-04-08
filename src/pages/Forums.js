@@ -2,11 +2,14 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import PostListItem from '../components/PostListItem';
 import { formatDate } from '../utils/formatDate';
-import { format } from 'timeago.js';
+import TimeAgo from 'javascript-time-ago';
+import en from 'javascript-time-ago/locale/en';
+TimeAgo.addDefaultLocale(en);
 
 function Forums() {
     const [posts, setPosts] = useState([]);
     const [users, setUsers] = useState([]);
+    const timeAgo = new TimeAgo('en-US');
 
     useEffect(() => {
         axios
@@ -46,6 +49,7 @@ function Forums() {
                             return (
                                 <PostListItem
                                     key={index}
+                                    id={post._id}
                                     img={
                                         user
                                             ? user.avatar
@@ -71,13 +75,14 @@ function Forums() {
                             return (
                                 <PostListItem
                                     key={index}
+                                    id={post._id}
                                     img={
                                         user
                                             ? user.avatar
                                             : 'https://ggsc.s3.amazonaws.com/images/uploads/The_Science-Backed_Benefits_of_Being_a_Dog_Owner.jpg'
                                     }
                                     title={post.title}
-                                    postDate={formatDate(post.createdAt)}
+                                    postDate={timeAgo.format(new Date(post.createdAt))}
                                     username={user ? user.userName : 'Unknown'}
                                     dateTitle="Latest:"
                                     className="w-[315px] truncate font-medium text-[#5c7099] cursor-pointer"

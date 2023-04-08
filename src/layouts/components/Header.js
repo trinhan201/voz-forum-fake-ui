@@ -58,8 +58,9 @@ function Header() {
         <>
             <header className="h-[57px] bg-[#343a40] px-[34.5px]">
                 <div className="flex items-center justify-start h-full">
-                    <div className="text-white">
+                    <div className="text-white flex items-center justify-center">
                         <img src={forumLogo} alt="logo" />
+                        <h3 className="font-bold text-[#f6f5fa] text-[20px] ml-1 mt-1">Fake</h3>
                     </div>
                 </div>
             </header>
