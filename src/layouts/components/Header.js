@@ -5,15 +5,20 @@ import { forumLogo } from '../../assets/img';
 import LoginForm from '../../components/Form/LoginForm';
 import RegisterForm from '../../components/Form/RegisterForm';
 import ChangePasswordForm from '../../components/Form/ChangePasswordForm';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 function Header() {
     const [scrolled, setScrolled] = useState(false);
     const [toggleLogin, setToggleLogin] = useState(false);
     const [toggleRegister, setToggleRegister] = useState(false);
     const [toggleMenu, setToggleMenu] = useState(false);
+    const [toggleNav, setToggleNav] = useState(false);
     const [toggleChangePassword, setToggleChangePassword] = useState(false);
     const [accessToken, setAccessToken] = useState('');
     const [userInfo, setUserInfo] = useState({});
+
+    console.log(toggleNav);
 
     const handleLogout = () => {
         if (!accessToken) return;
@@ -58,7 +63,7 @@ function Header() {
 
     return (
         <>
-            <header className="h-[57px] bg-[#343a40] px-[34.5px]">
+            <header className="h-[57px] bg-[#343a40] px-[16px] md:px-[34.5px]">
                 <div className="flex items-center justify-start h-full">
                     <div className="text-white flex items-center justify-center">
                         <img src={forumLogo} alt="logo" />
@@ -69,12 +74,12 @@ function Header() {
             <div
                 className={
                     scrolled
-                        ? 'fixed top-0 left-0 right-0 h-[40px] bg-[#343a40] px-[34.5px] shadow-md'
-                        : 'h-[40px] bg-[#343a40] px-[34.5px]'
+                        ? 'fixed top-0 left-0 right-0 h-[40px] bg-[#343a40] px-[16px] md:px-[34.5px] shadow-md'
+                        : 'h-[40px] bg-[#343a40] px-[16px] md:px-[34.5px]'
                 }
             >
                 <div className="flex items-center justify-between h-full">
-                    <ul className="flex text-white">
+                    <ul className="hidden md:flex text-white">
                         <li>
                             <NavLink
                                 className={({ isActive }) =>
@@ -112,6 +117,12 @@ function Header() {
                             </NavLink>
                         </li>
                     </ul>
+                    <div
+                        className="md:hidden text-[#e2e3e5] text-[24px] cursor-pointer"
+                        onClick={() => setToggleNav(!toggleNav)}
+                    >
+                        <FontAwesomeIcon icon={faBars} />
+                    </div>
                     {accessToken === '' ? (
                         <>
                             <ul className="flex">
@@ -164,6 +175,46 @@ function Header() {
                     )}
                 </div>
             </div>
+            {toggleNav && (
+                <ul className="flex flex-col items-center bg-[#343a40] text-white border-t-[0.2px] border-[#cccccc] py-2">
+                    <li className="w-full px-5">
+                        <NavLink
+                            className={({ isActive }) =>
+                                isActive
+                                    ? 'text-center text-[18px] text-[#23497c] font-semibold bg-[#e2e3e5] px-[15px] py-[8px] w-full block'
+                                    : 'text-center text-[18px] text-[#e2e3e5] font-semibold px-[15px] py-[8px] w-full block'
+                            }
+                            to="/"
+                        >
+                            Forums
+                        </NavLink>
+                    </li>
+                    <li className="w-full px-5">
+                        <NavLink
+                            className={({ isActive }) =>
+                                isActive
+                                    ? 'text-center text-[18px] text-[#23497c] font-semibold bg-[#e2e3e5] px-[15px] py-[8px] w-full block'
+                                    : 'text-center text-[18px] text-[#e2e3e5] font-semibold px-[15px] py-[8px] w-full block'
+                            }
+                            to="/members"
+                        >
+                            Members
+                        </NavLink>
+                    </li>
+                    <li className="w-full px-5">
+                        <NavLink
+                            className={({ isActive }) =>
+                                isActive
+                                    ? 'text-center text-[18px] text-[#23497c] font-semibold bg-[#e2e3e5] px-[15px] py-[8px] w-full block'
+                                    : 'text-center text-[18px] text-[#e2e3e5] font-semibold px-[15px] py-[8px] w-full block'
+                            }
+                            to="/help"
+                        >
+                            Help
+                        </NavLink>
+                    </li>
+                </ul>
+            )}
             {toggleLogin && <LoginForm setToggleLogin={setToggleLogin} />}
             {toggleRegister && <RegisterForm setToggleRegister={setToggleRegister} />}
             {toggleChangePassword && <ChangePasswordForm setToggleChangePassword={setToggleChangePassword} />}

@@ -59,7 +59,7 @@ function ChangePasswordForm({ setToggleChangePassword }) {
             onClick={() => setToggleChangePassword(false)}
         >
             <div
-                className="relative bg-[#e2e3e5] w-[500px] h-fit p-10 rounded animate-fadeIn"
+                className="relative bg-[#e2e3e5] w-[350px] md:w-[500px] h-fit p-10 rounded animate-fadeIn"
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className="font-bold text-[32px] mb-8">Change password</div>

@@ -67,16 +67,16 @@ function Profile() {
 
     return (
         <>
-            <div className="flex items-center h-[33px] bg-[#e2e3e5] text-[15px] text-[#23497c] px-[34.5px]">
+            <div className="flex items-center h-[33px] bg-[#e2e3e5] text-[15px] text-[#23497c] px-[16px] md:px-[34.5px]">
                 My profile
             </div>
-            <div className=" px-[34.5px] mt-[12px] text-[#dce1e4] text-[16px] font-medium">
+            <div className="px-[16px] md:px-[34.5px] mt-[12px] text-[#dce1e4] text-[16px] font-medium">
                 <NavLink to="/">Forums</NavLink>
                 <span className="mx-2">{'>'}</span>
                 <span>Profile</span>
             </div>
-            <div className="flex px-[34.5px] pt-[10px] pb-[24px] gap-x-[16px]">
-                <div className="flex-1">
+            <div className="xl:flex px-[16px] md:px-[34.5px] pt-[10px] pb-[24px] gap-x-[16px]">
+                <div className="xl:flex-1">
                     <div className="flex flex-col items-center bg-[#ebeced] h-fit text-[#9a919b] p-[10px]">
                         <h3 className="text-[#5c7099] text-[28px] font-medium p-[10px]">Profile</h3>
                         <div className="text-center">
@@ -107,13 +107,13 @@ function Profile() {
                         </p>
                         <button
                             onClick={() => setToggleEditProfile(true)}
-                            className="bg-[#5c7099] text-[#ffffff] rounded px-3 py-2 mt-3"
+                            className="w-full bg-[#5c7099] text-[#ffffff] rounded px-3 py-2 mt-3"
                         >
                             Edit infomation
                         </button>
                     </div>
                 </div>
-                <div className="flex-[3] flex flex-col h-fit">
+                <div className="xl:flex-[3] mt-4 xl:mt-0 flex flex-col h-fit">
                     <button
                         className="self-end bg-[#5c7099] text-[#ffffff] rounded px-3 py-2 mb-4"
                         onClick={() => setToggleCreatePost(true)}
@@ -136,7 +136,7 @@ function Profile() {
                                         postDate={formatDate(post.createdAt)}
                                         username={userInfo.userName}
                                         dateTitle="Created at:"
-                                        className="w-[800px] truncate font-medium text-[#5c7099] cursor-pointer"
+                                        className="w-[190px] md:w-[500px] lg:w-[800px] truncate font-medium text-[#5c7099] cursor-pointer"
                                     />
                                 );
                             })}

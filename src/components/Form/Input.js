@@ -1,9 +1,9 @@
 function Input(props) {
     return (
-        <div className="flex justify-between items-center mb-3">
+        <div className="md:flex md:justify-between md:items-center mb-3">
             <label className="min-w-[160px] text-[18px]">{props.label}</label>
             <input
-                className="flex-1 px-[18px] py-[8px] bg-[#e5eaf0] rounded border border-[#c3c6c9] outline-none"
+                className="w-full mt-2 md:mt-0 md:flex-1 px-[18px] py-[8px] bg-[#e5eaf0] rounded border border-[#c3c6c9] outline-none"
                 type={props.type}
                 placeholder={props.placeholder}
                 onChange={(e) => props.setValue(e.target.value)}

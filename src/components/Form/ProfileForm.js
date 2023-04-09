@@ -73,7 +73,7 @@ function ProfileForm({ setToggleEditProfile }) {
             onClick={() => setToggleEditProfile(false)}
         >
             <div
-                className="relative bg-[#e2e3e5] w-[500px] h-fit p-10 rounded animate-fadeIn"
+                className="relative bg-[#e2e3e5] w-[340px] md:w-[500px] h-fit p-10 rounded animate-fadeIn"
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className="font-bold text-[32px] mb-8">Edit profile</div>

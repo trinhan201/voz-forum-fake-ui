@@ -135,16 +135,16 @@ function CreatePostForm({ setToggleCreatePost, titleForm, postId }) {
             onClick={() => setToggleCreatePost(false)}
         >
             <div
-                className="relative bg-[#e2e3e5] w-[500px] h-fit p-10 rounded animate-fadeIn"
+                className="relative bg-[#e2e3e5] w-[340px] md:w-[500px] h-fit p-10 rounded animate-fadeIn"
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className="font-bold text-[32px] mb-8">{titleForm}</div>
                 <form>
                     <Input label="Title:" type="text" placeholder="Title here" value={title} setValue={setTitle} />
-                    <div className="flex justify-between items-center">
+                    <div className="md:flex md:justify-between md:items-center">
                         <label className="text-[17px]">Image:</label>
                         <input
-                            className="w-[259px]"
+                            className="w-full md:w-[259px] mt-2 md:mt-0"
                             type="file"
                             name="myFile"
                             multiple
