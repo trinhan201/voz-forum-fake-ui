@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Input from './Input';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faClose, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 function RegisterForm({ setToggleRegister }) {
     const [usernameValue, setUsernameValue] = useState('');
@@ -58,6 +58,12 @@ function RegisterForm({ setToggleRegister }) {
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className="font-bold text-[32px] mb-8">Register Form</div>
+                <div
+                    onClick={() => setToggleRegister(false)}
+                    className="absolute top-0 right-0 p-4 text-[20px] cursor-pointer"
+                >
+                    <FontAwesomeIcon icon={faClose} />
+                </div>
                 <form>
                     <Input
                         label="Username:"

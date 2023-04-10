@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Input from './Input';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, faClose } from '@fortawesome/free-solid-svg-icons';
 
 function ProfileForm({ setToggleEditProfile }) {
     const [userNameValue, setUserNameValue] = useState('');
@@ -77,6 +77,12 @@ function ProfileForm({ setToggleEditProfile }) {
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className="font-bold text-[32px] mb-8">Edit profile</div>
+                <div
+                    onClick={() => setToggleEditProfile(false)}
+                    className="absolute top-0 right-0 p-4 text-[20px] cursor-pointer"
+                >
+                    <FontAwesomeIcon icon={faClose} />
+                </div>
                 <form>
                     <Input
                         label="Username:"

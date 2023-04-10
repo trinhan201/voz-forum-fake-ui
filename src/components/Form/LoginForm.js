@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Input from './Input';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, faClose } from '@fortawesome/free-solid-svg-icons';
 
 function LoginForm({ setToggleLogin }) {
     const [emailValue, setEmailValue] = useState('');
@@ -50,6 +50,12 @@ function LoginForm({ setToggleLogin }) {
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className="font-bold text-[32px] mb-8">Login Form</div>
+                <div
+                    onClick={() => setToggleLogin(false)}
+                    className="absolute top-0 right-0 p-4 text-[20px] cursor-pointer"
+                >
+                    <FontAwesomeIcon icon={faClose} />
+                </div>
                 <form>
                     <Input
                         label="Email:"

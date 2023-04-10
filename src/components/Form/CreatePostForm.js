@@ -3,7 +3,7 @@ import axios from 'axios';
 import FormData from 'form-data';
 import Input from './Input';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, faClose } from '@fortawesome/free-solid-svg-icons';
 
 function CreatePostForm({ setToggleCreatePost, titleForm, postId }) {
     const [title, setTitle] = useState('');
@@ -139,6 +139,12 @@ function CreatePostForm({ setToggleCreatePost, titleForm, postId }) {
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className="font-bold text-[32px] mb-8">{titleForm}</div>
+                <div
+                    onClick={() => setToggleCreatePost(false)}
+                    className="absolute top-0 right-0 p-4 text-[20px] cursor-pointer"
+                >
+                    <FontAwesomeIcon icon={faClose} />
+                </div>
                 <form>
                     <Input label="Title:" type="text" placeholder="Title here" value={title} setValue={setTitle} />
                     <div className="md:flex md:justify-between md:items-center">
