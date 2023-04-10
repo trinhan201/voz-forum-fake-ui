@@ -7,8 +7,6 @@ import CommentListItem from '../components/CommentListItem';
 import { formatDate } from '../utils/formatDate';
 import CreatePostForm from '../components/Form/CreatePostForm';
 import TimeAgo from 'javascript-time-ago';
-// import en from 'javascript-time-ago/locale/en';
-// TimeAgo.addDefaultLocale(en);
 
 function PostDetail() {
     const [postInfo, setPostInfo] = useState({});
@@ -27,7 +25,7 @@ function PostDetail() {
     const handleDeletePost = () => {
         if (window.confirm('Are you sure want to delete this post?') === false) return;
         axios
-            .delete(`http://localhost:8080/api/v1/post/delete/${id}`, {
+            .delete(`${process.env.REACT_APP_API_URL}/api/v1/post/delete/${id}`, {
                 headers: { Authorization: `Bearer ${accessToken}` },
             })
             .then(function (response) {
@@ -46,7 +44,7 @@ function PostDetail() {
             content: comment,
         };
         axios
-            .post('http://localhost:8080/api/v1/comment/create', data, {
+            .post(`${process.env.REACT_APP_API_URL}/api/v1/comment/create`, data, {
                 headers: { Authorization: `Bearer ${accessToken}` },
             })
             .then(function (response) {
@@ -60,7 +58,7 @@ function PostDetail() {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:8080/api/v1/comment/all`)
+            .get(`${process.env.REACT_APP_API_URL}/api/v1/comment/all`)
             .then(function (response) {
                 setComments(response.data.data);
             })
@@ -71,7 +69,7 @@ function PostDetail() {
 
     useEffect(() => {
         axios
-            .get('http://localhost:8080/api/v1/user/all')
+            .get(`${process.env.REACT_APP_API_URL}/api/v1/user/all`)
             .then(function (response) {
                 setUsers(response.data.data);
             })
@@ -82,11 +80,11 @@ function PostDetail() {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:8080/api/v1/post/${id}`)
+            .get(`${process.env.REACT_APP_API_URL}/api/v1/post/${id}`)
             .then(function (response) {
                 setPostInfo(response.data.data);
                 axios
-                    .get(`http://localhost:8080/api/v1/user/${response.data.data.userId}`)
+                    .get(`${process.env.REACT_APP_API_URL}/api/v1/user/${response.data.data.userId}`)
                     .then(function (response) {
                         setUserInfo(response.data.data);
                     })
@@ -108,7 +106,7 @@ function PostDetail() {
     useEffect(() => {
         if (!accessToken) return;
         axios
-            .get('http://localhost:8080/api/v1/auth/current-user', {
+            .get(`${process.env.REACT_APP_API_URL}/api/v1/auth/current-user`, {
                 headers: { Authorization: `Bearer ${accessToken}` },
             })
             .then(function (response) {

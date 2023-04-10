@@ -3,8 +3,6 @@ import axios from 'axios';
 import PostListItem from '../components/PostListItem';
 import { formatDate } from '../utils/formatDate';
 import TimeAgo from 'javascript-time-ago';
-// import en from 'javascript-time-ago/locale/en';
-// TimeAgo.addDefaultLocale(en);
 
 function Forums() {
     const [posts, setPosts] = useState([]);
@@ -15,7 +13,7 @@ function Forums() {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:8080/api/v1/post/all?limit=${limitInc}`)
+            .get(`${process.env.REACT_APP_API_URL}/api/v1/post/all?limit=${limitInc}`)
             .then(function (response) {
                 setPosts(response.data.data);
                 setLimit(response.data.length);
@@ -27,7 +25,7 @@ function Forums() {
 
     useEffect(() => {
         axios
-            .get('http://localhost:8080/api/v1/user/all')
+            .get(`${process.env.REACT_APP_API_URL}/api/v1/user/all`)
             .then(function (response) {
                 setUsers(response.data.data);
             })

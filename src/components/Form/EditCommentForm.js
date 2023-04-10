@@ -9,7 +9,7 @@ function EditCommentForm(props) {
         if (!accessToken) return;
         axios
             .patch(
-                `http://localhost:8080/api/v1/comment/update/${props.commentId}`,
+                `${process.env.REACT_APP_API_URL}/api/v1/comment/update/${props.commentId}`,
                 { content: comment },
                 {
                     headers: { Authorization: `Bearer ${accessToken}` },
@@ -26,7 +26,7 @@ function EditCommentForm(props) {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:8080/api/v1/comment/${props.commentId}`)
+            .get(`${process.env.REACT_APP_API_URL}/api/v1/comment/${props.commentId}`)
             .then(function (response) {
                 setComment(response.data.data.content);
             })

@@ -19,7 +19,7 @@ function ChangePasswordForm({ setToggleChangePassword }) {
         if (confirmPassword !== newPassword) return alert('Password not match');
         axios
             .patch(
-                'http://localhost:8080/api/v1/user/change-password',
+                `${process.env.REACT_APP_API_URL}/api/v1/user/change-password`,
                 {
                     oldPassword: oldPassword,
                     newPassword: newPassword,

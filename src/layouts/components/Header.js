@@ -18,8 +18,6 @@ function Header() {
     const [accessToken, setAccessToken] = useState('');
     const [userInfo, setUserInfo] = useState({});
 
-    console.log(toggleNav);
-
     const handleLogout = () => {
         if (!accessToken) return;
         localStorage.removeItem('accessToken');
@@ -50,7 +48,7 @@ function Header() {
     useEffect(() => {
         if (!accessToken) return;
         axios
-            .get('http://localhost:8080/api/v1/auth/current-user', {
+            .get(`${process.env.REACT_APP_API_URL}/api/v1/auth/current-user`, {
                 headers: { Authorization: `Bearer ${accessToken}` },
             })
             .then(function (response) {
@@ -177,7 +175,7 @@ function Header() {
             </div>
             {toggleNav && (
                 <ul className="flex flex-col items-center bg-[#343a40] text-white border-t-[0.2px] border-[#cccccc] py-2">
-                    <li className="w-full px-5">
+                    <li className="w-full px-5" onClick={() => setToggleNav(false)}>
                         <NavLink
                             className={({ isActive }) =>
                                 isActive
@@ -189,7 +187,7 @@ function Header() {
                             Forums
                         </NavLink>
                     </li>
-                    <li className="w-full px-5">
+                    <li className="w-full px-5" onClick={() => setToggleNav(false)}>
                         <NavLink
                             className={({ isActive }) =>
                                 isActive
@@ -201,7 +199,7 @@ function Header() {
                             Members
                         </NavLink>
                     </li>
-                    <li className="w-full px-5">
+                    <li className="w-full px-5" onClick={() => setToggleNav(false)}>
                         <NavLink
                             className={({ isActive }) =>
                                 isActive

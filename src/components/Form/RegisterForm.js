@@ -25,7 +25,7 @@ function RegisterForm({ setToggleRegister }) {
         };
         if (passwordValue !== confirmPasswordValue) return alert('Password is not match');
         axios
-            .post('http://localhost:8080/api/v1/auth/signup', data)
+            .post(`${process.env.REACT_APP_API_URL}/api/v1/auth/signup`, data)
             .then(function (response) {
                 setLoading(true);
                 timeOutId = setTimeout(() => {

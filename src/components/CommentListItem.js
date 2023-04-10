@@ -11,12 +11,11 @@ function CommentListItem(props) {
     const handleDeleteComment = () => {
         if (window.confirm('Are you sure want to delete this comment?') === false) return;
         axios
-            .delete(`http://localhost:8080/api/v1/comment/delete/${props.commentId}`, {
+            .delete(`${process.env.REACT_APP_API_URL}/api/v1/comment/delete/${props.commentId}`, {
                 headers: { Authorization: `Bearer ${accessToken}` },
             })
             .then(function (response) {
                 alert(response.data.message);
-                // navigate('/profile');
                 window.location.reload(true);
             })
             .catch(function (error) {

@@ -13,7 +13,7 @@ function LoginForm({ setToggleLogin }) {
     const handleLogin = (e) => {
         e.preventDefault();
         axios
-            .post('http://localhost:8080/api/v1/auth/signin', {
+            .post(`${process.env.REACT_APP_API_URL}/api/v1/auth/signin`, {
                 email: emailValue,
                 password: passwordValue,
             })

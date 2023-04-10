@@ -11,7 +11,7 @@ function MemberDetail() {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:8080/api/v1/user/${id}`)
+            .get(`${process.env.REACT_APP_API_URL}/api/v1/user/${id}`)
             .then(function (response) {
                 setUserInfo(response.data.data);
             })
@@ -22,7 +22,7 @@ function MemberDetail() {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:8080/api/v1/post/all`)
+            .get(`${process.env.REACT_APP_API_URL}/api/v1/post/all`)
             .then(function (response) {
                 setPosts(response.data.data);
             })

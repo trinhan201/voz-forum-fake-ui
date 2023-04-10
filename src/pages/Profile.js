@@ -22,7 +22,7 @@ function Profile() {
         if (!file) return;
         if (!accessToken) return;
         axios
-            .post('http://localhost:8080/api/v1/user/upload', data, {
+            .post(`${process.env.REACT_APP_API_URL}/api/v1/user/upload`, data, {
                 headers: { Authorization: `Bearer ${accessToken}` },
             })
             .then(function (response) {
@@ -43,7 +43,7 @@ function Profile() {
     useEffect(() => {
         if (!accessToken) return;
         axios
-            .get('http://localhost:8080/api/v1/auth/current-user', {
+            .get(`${process.env.REACT_APP_API_URL}/api/v1/auth/current-user`, {
                 headers: { Authorization: `Bearer ${accessToken}` },
             })
             .then(function (response) {
@@ -56,7 +56,7 @@ function Profile() {
 
     useEffect(() => {
         axios
-            .get('http://localhost:8080/api/v1/post/all')
+            .get(`${process.env.REACT_APP_API_URL}/api/v1/post/all`)
             .then(function (response) {
                 setPosts(response.data.data);
             })

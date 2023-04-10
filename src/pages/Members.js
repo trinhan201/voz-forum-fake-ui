@@ -15,7 +15,7 @@ function Members() {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:8080/api/v1/user/all?limit=${limitInc}`)
+            .get(`${process.env.REACT_APP_API_URL}/api/v1/user/all?limit=${limitInc}`)
             .then(function (response) {
                 setMembers(response.data.data);
                 setLimit(response.data.length);
@@ -28,7 +28,7 @@ function Members() {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:8080/api/v1/post/all`)
+            .get(`${process.env.REACT_APP_API_URL}/api/v1/post/all`)
             .then(function (response) {
                 setPosts(response.data.fullPosts);
             })
@@ -46,7 +46,7 @@ function Members() {
     useEffect(() => {
         if (!accessToken) return;
         axios
-            .get('http://localhost:8080/api/v1/auth/current-user', {
+            .get(`${process.env.REACT_APP_API_URL}/api/v1/auth/current-user`, {
                 headers: { Authorization: `Bearer ${accessToken}` },
             })
             .then(function (response) {

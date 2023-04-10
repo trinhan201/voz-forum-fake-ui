@@ -8,6 +8,8 @@
 #Prettierrc
 /.vscode
 
+.env
+
 # testing
 /coverage
 

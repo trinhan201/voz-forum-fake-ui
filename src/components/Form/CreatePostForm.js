@@ -28,7 +28,7 @@ function CreatePostForm({ setToggleCreatePost, titleForm, postId }) {
             content: content,
         };
         axios
-            .post('http://localhost:8080/api/v1/post/create', data, {
+            .post(`${process.env.REACT_APP_API_URL}/api/v1/post/create`, data, {
                 headers: { Authorization: `Bearer ${accessToken}` },
             })
             .then(function (response) {
@@ -40,7 +40,7 @@ function CreatePostForm({ setToggleCreatePost, titleForm, postId }) {
                     }
                     fomrData.append('postId', response.data.data._id);
                     axios
-                        .post('http://localhost:8080/api/v1/post/upload', fomrData, {
+                        .post(`${process.env.REACT_APP_API_URL}/api/v1/post/upload`, fomrData, {
                             headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'multipart/form-data' },
                         })
                         .then(function (response) {
@@ -75,7 +75,7 @@ function CreatePostForm({ setToggleCreatePost, titleForm, postId }) {
             content: content,
         };
         axios
-            .put(`http://localhost:8080/api/v1/post/update/${postId}`, data, {
+            .put(`${process.env.REACT_APP_API_URL}/api/v1/post/update/${postId}`, data, {
                 headers: { Authorization: `Bearer ${accessToken}` },
             })
             .then(function (response) {
@@ -87,7 +87,7 @@ function CreatePostForm({ setToggleCreatePost, titleForm, postId }) {
                     }
                     fomrData.append('postId', postId);
                     axios
-                        .post('http://localhost:8080/api/v1/post/upload', fomrData, {
+                        .post(`${process.env.REACT_APP_API_URL}/api/v1/post/upload`, fomrData, {
                             headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'multipart/form-data' },
                         })
                         .then(function (response) {
@@ -119,7 +119,7 @@ function CreatePostForm({ setToggleCreatePost, titleForm, postId }) {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:8080/api/v1/post/${postId}`)
+            .get(`${process.env.REACT_APP_API_URL}/api/v1/post/${postId}`)
             .then(function (response) {
                 setTitle(response.data.data.title);
                 setContent(response.data.data.content);

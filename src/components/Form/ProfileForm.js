@@ -22,7 +22,7 @@ function ProfileForm({ setToggleEditProfile }) {
     useEffect(() => {
         if (!accessToken) return;
         axios
-            .get('http://localhost:8080/api/v1/auth/current-user', {
+            .get(`${process.env.REACT_APP_API_URL}/api/v1/auth/current-user`, {
                 headers: { Authorization: `Bearer ${accessToken}` },
             })
             .then(function (response) {
@@ -46,7 +46,7 @@ function ProfileForm({ setToggleEditProfile }) {
         };
         if (!accessToken) return;
         axios
-            .put('http://localhost:8080/api/v1/user/update', data, {
+            .put(`${process.env.REACT_APP_API_URL}/api/v1/user/update`, data, {
                 headers: { Authorization: `Bearer ${accessToken}` },
             })
             .then(function (response) {
