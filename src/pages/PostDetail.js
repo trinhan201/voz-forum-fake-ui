@@ -227,6 +227,9 @@ function PostDetail() {
                                                 : 'hidden'
                                         }
                                         commentId={comment._id}
+                                        path={
+                                            user && (user._id === currentUser._id ? '/profile' : `/members/${user._id}`)
+                                        }
                                     />
                                 );
                             })}

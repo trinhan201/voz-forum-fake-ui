@@ -7,15 +7,27 @@ import TimeAgo from 'javascript-time-ago';
 function Forums() {
     const [posts, setPosts] = useState([]);
     const [users, setUsers] = useState([]);
+    const [latestPost, setLatestPost] = useState([]);
+    const [currentUser, setCurrentUser] = useState({});
+    const [accessToken, setAccessToken] = useState('');
     const [limitInc, setLimitInc] = useState(5);
     const [limit, setLimit] = useState(Number);
     const timeAgo = new TimeAgo('en-US');
+
+    const redirect = (id) => {
+        if (id === currentUser._id) {
+            return '/profile';
+        } else {
+            return `/members/${id}`;
+        }
+    };
 
     useEffect(() => {
         axios
             .get(`${process.env.REACT_APP_API_URL}/api/v1/post/all?limit=${limitInc}`)
             .then(function (response) {
                 setPosts(response.data.data);
+                setLatestPost(response.data.fullPosts);
                 setLimit(response.data.length);
             })
             .catch(function (error) {
@@ -32,6 +44,26 @@ function Forums() {
             .catch(function (error) {
                 console.log(error);
             });
+    }, []);
+
+    useEffect(() => {
+        if (!accessToken) return;
+        axios
+            .get(`${process.env.REACT_APP_API_URL}/api/v1/auth/current-user`, {
+                headers: { Authorization: `Bearer ${accessToken}` },
+            })
+            .then(function (response) {
+                setCurrentUser(response.data.data);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }, [accessToken]);
+
+    useEffect(() => {
+        const token = localStorage.getItem('accessToken');
+        if (!token) return;
+        setAccessToken(token);
     }, []);
 
     return (
@@ -58,9 +90,12 @@ function Forums() {
                                     }
                                     title={post.title}
                                     postDate={formatDate(post.createdAt)}
+                                    postUpdateDate={formatDate(post.updatedAt)}
                                     username={user ? user.userName : 'Unknown'}
                                     dateTitle="Created at:"
+                                    updateDateTitle="Updated at:"
                                     className="w-[190px] md:w-[500px] lg:w-[800px] truncate font-medium text-[#5c7099] cursor-pointer"
+                                    path={user && redirect(user._id)}
                                 />
                             );
                         })}
@@ -77,7 +112,7 @@ function Forums() {
                 <div className="xl:flex-1 bg-[#ebeced] h-fit mt-4 xl:mt-0">
                     <h3 className="text-[#5c7099] font-medium p-[10px]">Latest posts</h3>
                     <ul>
-                        {posts.slice(0, 5).map((post, index) => {
+                        {latestPost.slice(0, 5).map((post, index) => {
                             const user = users.find((user) => {
                                 return user._id === post.userId;
                             });
@@ -91,10 +126,15 @@ function Forums() {
                                             : 'https://ggsc.s3.amazonaws.com/images/uploads/The_Science-Backed_Benefits_of_Being_a_Dog_Owner.jpg'
                                     }
                                     title={post.title}
-                                    postDate={timeAgo.format(new Date(post.createdAt))}
+                                    postDate={timeAgo.format(
+                                        new Date(post.updatedAt === post.createdAt ? post.createdAt : post.updatedAt),
+                                    )}
+                                    postUpdateDate=""
                                     username={user ? user.userName : 'Unknown'}
                                     dateTitle="Latest:"
+                                    updateDateTitle=""
                                     className="w-[190px] md:w-[500px] lg:w-[315px] truncate font-medium text-[#5c7099] cursor-pointer"
+                                    path={user && redirect(user._id)}
                                 />
                             );
                         })}

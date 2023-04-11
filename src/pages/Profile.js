@@ -134,8 +134,10 @@ function Profile() {
                                         img={userInfo.avatar}
                                         title={post.title}
                                         postDate={formatDate(post.createdAt)}
+                                        postUpdateDate={formatDate(post.updatedAt)}
                                         username={userInfo.userName}
                                         dateTitle="Created at:"
+                                        updateDateTitle="Updated at:"
                                         className="w-[190px] md:w-[500px] lg:w-[800px] truncate font-medium text-[#5c7099] cursor-pointer"
                                     />
                                 );

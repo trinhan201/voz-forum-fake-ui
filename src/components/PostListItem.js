@@ -14,8 +14,18 @@ function PostListItem(props) {
                         <h3 className={props.className}>{props.title}</h3>
                     </NavLink>
                     <p className="text-[14px] text-[#9a919b]">
-                        {props.dateTitle} <span>{props.postDate}</span> - by{' '}
-                        <span className="text-[#5c7099] cursor-pointer">{props.username}</span>
+                        {props.dateTitle} <span>{props.postDate}</span>{' '}
+                        <span className={props.postDate === props.postUpdateDate ? 'hidden' : ''}>
+                            <span className={props.updateDateTitle === '' ? 'hidden' : ''}>-</span>
+                            {' ' + props.updateDateTitle + ' '}
+                        </span>
+                        <span className={props.postDate === props.postUpdateDate ? 'hidden' : ''}>
+                            {props.postUpdateDate}
+                        </span>{' '}
+                        - by
+                        <NavLink to={props.path}>
+                            <span className="text-[#5c7099] cursor-pointer"> {props.username}</span>
+                        </NavLink>
                     </p>
                 </div>
             </div>
