@@ -5,7 +5,7 @@ function EditCommentForm(props) {
     const [comment, setComment] = useState('');
     const [accessToken, setAccessToken] = useState('');
 
-    const handleUpdateComment = (e, { setToggleEditComment }) => {
+    const handleUpdateComment = (e) => {
         e.preventDefault();
         if (!accessToken) return;
         axios
