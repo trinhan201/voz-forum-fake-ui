@@ -191,18 +191,20 @@ function PostDetail() {
                 </div>
                 <div className="w-full h-fit mt-5">
                     <h3 className="text-[#ebeced] text-[21px] font-medium bg-[#5c7099] px-[10px] py-[6px]">Comment</h3>
-                    <div className="flex">
-                        <input
-                            className="w-full px-[12px] py-[8px] outline-none"
-                            type="text"
-                            placeholder="Enter something..."
-                            value={comment}
-                            onChange={(e) => setComment(e.target.value)}
-                        />
-                        <button className="px-[18px] bg-[#aaaaaa]" onClick={handleCreateComment}>
-                            <FontAwesomeIcon icon={faPaperPlane} />
-                        </button>
-                    </div>
+                    <form>
+                        <div className="flex">
+                            <input
+                                className="w-full px-[12px] py-[8px] outline-none"
+                                type="text"
+                                placeholder="Enter something..."
+                                value={comment}
+                                onChange={(e) => setComment(e.target.value)}
+                            />
+                            <button className="px-[18px] bg-[#aaaaaa]" onClick={handleCreateComment}>
+                                <FontAwesomeIcon icon={faPaperPlane} />
+                            </button>
+                        </div>
+                    </form>
                     <ul>
                         {comments
                             .filter((comment) => comment.postId === id)

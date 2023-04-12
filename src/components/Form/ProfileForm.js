@@ -12,6 +12,7 @@ function ProfileForm({ setToggleEditProfile }) {
     const [accessToken, setAccessToken] = useState('');
     const [loading, setLoading] = useState(false);
     let timeOutId;
+    const genderList = ['Male', 'Female'];
 
     useEffect(() => {
         const token = localStorage.getItem('accessToken');
@@ -98,13 +99,21 @@ function ProfileForm({ setToggleEditProfile }) {
                         value={emailValue}
                         setValue={setEmailValue}
                     />
-                    <Input
-                        label="Gender:"
-                        type="text"
-                        placeholder="Enter your gender"
-                        value={genderValue}
-                        setValue={setGenderValue}
-                    />
+                    <div className="flex mb-[12px]">
+                        <label className="hidden md:block min-w-[160px] text-[18px]">Gender:</label>
+                        {genderList.map((gender, index) => {
+                            return (
+                                <div key={index} className="flex items-center mr-3">
+                                    <input
+                                        type="radio"
+                                        checked={genderValue === gender}
+                                        onChange={() => setGenderValue(gender)}
+                                    />
+                                    <span className="ml-1">{gender}</span>
+                                </div>
+                            );
+                        })}
+                    </div>
                     <Input
                         label="Phone:"
                         type="text"

@@ -43,24 +43,26 @@ function EditCommentForm(props) {
 
     return (
         <div>
-            <input
-                className="w-full px-[18px] py-[8px] bg-[#e5eaf0] border border-[#c3c6c9] outline-none break-words"
-                type="text"
-                placeholder="Enter something..."
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-            />
-            <div className="flex items-center">
-                <button className="w-full bg-[#5c7099] px-[12px] py-[8px] text-white" onClick={handleUpdateComment}>
-                    Save
-                </button>
-                <button
-                    className="w-full bg-[red] px-[12px] py-[8px] text-white"
-                    onClick={() => props.setToggleEditComment(false)}
-                >
-                    Cancel
-                </button>
-            </div>
+            <form>
+                <input
+                    className="w-full px-[18px] py-[8px] bg-[#e5eaf0] border border-[#c3c6c9] outline-none break-words"
+                    type="text"
+                    placeholder="Enter something..."
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                />
+                <div className="flex items-center">
+                    <button className="w-full bg-[#5c7099] px-[12px] py-[8px] text-white" onClick={handleUpdateComment}>
+                        Save
+                    </button>
+                    <button
+                        className="w-full bg-[red] px-[12px] py-[8px] text-white"
+                        onClick={() => props.setToggleEditComment(false)}
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </form>
         </div>
     );
 }

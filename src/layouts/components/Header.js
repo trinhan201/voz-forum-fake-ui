@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { forumLogo } from '../../assets/img';
 import LoginForm from '../../components/Form/LoginForm';
@@ -17,10 +17,12 @@ function Header() {
     const [toggleChangePassword, setToggleChangePassword] = useState(false);
     const [accessToken, setAccessToken] = useState('');
     const [userInfo, setUserInfo] = useState({});
+    const navigate = useNavigate();
 
     const handleLogout = () => {
         if (!accessToken) return;
         localStorage.removeItem('accessToken');
+        navigate('/');
         window.location.reload(true);
     };
 
