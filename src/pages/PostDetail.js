@@ -37,7 +37,8 @@ function PostDetail() {
             });
     };
 
-    const handleCreateComment = () => {
+    const handleCreateComment = (e) => {
+        e.preventDefault();
         if (!accessToken) return alert('Login to comment this post');
         const data = {
             postId: id,
