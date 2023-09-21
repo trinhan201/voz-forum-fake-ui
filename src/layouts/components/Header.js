@@ -95,12 +95,16 @@ function Header() {
                             </NavLink>
                         </li>
                         <li>
-                            <a
-                                className='text-[18px] text-[#23497c] font-semibold bg-[#e2e3e5] px-[15px] py-[8px]'
-                                href="/members"
+                            <NavLink
+                                className={({ isActive }) =>
+                                    isActive
+                                        ? 'text-[18px] text-[#23497c] font-semibold bg-[#e2e3e5] px-[15px] py-[8px]'
+                                        : 'text-[18px] text-[#e2e3e5] font-semibold px-[15px] py-[8px]'
+                                }
+                                to="/members"
                             >
                                 Members
-                            </a>
+                            </NavLink>
                         </li>
                         <li>
                             <NavLink
